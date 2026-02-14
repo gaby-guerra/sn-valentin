@@ -1,199 +1,232 @@
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<!-- Open Graph (Facebook, WhatsApp, etc.) -->
-<meta property="og:title" content="💘 Regalo de San Valentín Interactivo">
-<meta property="og:description" content="Genera tu regalo y compártelo 💌">
-<meta property="og:image" content="https://gaby-guerra.github.io/sn-valentin/preview.jpg">
-<meta property="og:url" content="https://gaby-guerra.github.io/sn-valentin/">
-<meta property="og:type" content="website">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
+  <!-- Open Graph (Facebook, WhatsApp, etc.) -->
+  <meta property="og:title" content="💘 Regalo de San Valentín Interactivo">
+  <meta property="og:description" content="Genera tu regalo y compártelo 💌">
+  <meta property="og:image" content="https://gaby-guerra.github.io/sn-valentin/preview.jpg">
+  <meta property="og:image:secure_url" content="https://gaby-guerra.github.io/sn-valentin/preview.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://gaby-guerra.github.io/sn-valentin/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gaby-guerra.github.io/sn-valentin/preview.jpg">
+
+  <title>Regalo de San Valentín</title>
+
+  <style>
+    :root { --pad: 14px; }
+    body { margin: 0; }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 18px var(--pad) 28px;
+      display: grid;
+      gap: 14px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    h1 { font-size: 20px; margin: 6px 0 0; }
+    .sub { color:#556; font-size: 13px; margin: 0 0 6px; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: end;
+    }
+    label { font-size: 13px; color:#334; display:block; margin-bottom: 6px; }
+    select, input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #d6dbe2;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .buttons { display:flex; gap:10px; flex-wrap: wrap; }
+    button {
+      padding: 10px 12px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 1px solid #d6dbe2;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    /* Billete */
+    .bill {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 860 / 360;
+      background: center/cover no-repeat;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.18);
+    }
+    .text {
+      position: absolute;
+      color: rgba(0,0,0,.95);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      font-size: clamp(16px, 3.8vw, 30px);
+
+      /* plaquita para que siempre se lea */
+      background: rgba(255,255,255,.72);
+      padding: 6px 10px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.18);
+      backdrop-filter: blur(2px);
+    }
+    .topLeft { top: 6%; left: 6%; }
+    .bottomRight { bottom: 7%; right: 6%; }
+    .hint { font-size: 12px; color:#667; }
+
+    @media (max-width: 600px) {
+      .controls { grid-template-columns: 1fr; }
+      button { flex: 1 1 160px; }
+      .text { font-size: clamp(14px, 5vw, 22px); }
+    }
+  </style>
 </head>
 
-<style>
-  :root { --pad: 14px; }
-  body { margin: 0; }
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 18px var(--pad) 28px;
-    display: grid;
-    gap: 14px;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  }
-  h1 { font-size: 20px; margin: 6px 0 0; }
-  .sub { color:#556; font-size: 13px; margin: 0 0 6px; }
+<body>
+  <div class="wrap">
+    <h1>💘 Regalo de San Valentín</h1>
+    <p class="sub">Elige, tu regalo GRATIS.</p>
 
-  .controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: end;
-  }
-  label { font-size: 13px; color:#334; display:block; margin-bottom: 6px; }
-  select, input {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 1px solid #d6dbe2;
-    background: #fff;
-  }
-  .buttons { display:flex; gap:10px; }
-  button {
-    padding: 10px 12px;
-    font-size: 15px;
-    border-radius: 12px;
-    border: 1px solid #d6dbe2;
-    background: #fff;
-    cursor: pointer;
-  }
-
-  /* Billete */
-  .bill {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 860 / 360; 
-    background: center/cover no-repeat;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 14px 40px rgba(0,0,0,.18);
-  }
-  .text {
-    position: absolute;
-    color: rgba(0,0,0,.9);
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 0 rgba(255,255,255,.35);
-    white-space: nowrap;
-    font-size: clamp(16px, 3.8vw, 30px);
-  }
-  .topLeft { top: 2%; left: 8%; }
-  .bottomRight { bottom: 4%; right: 8%; } /* pegado a la orilla */
-  .hint { font-size: 12px; color:#667; }
-
-  /* Modal */
-  .backdrop {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.48);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 9999;
-  }
-  .modal {
-    width: min(760px, 100%);
-    background: #fff;
-    border-radius: 18px;
-    padding: 14px;
-    box-shadow: 0 26px 70px rgba(0,0,0,.28);
-  }
-  .modalHead {
-    display:flex; align-items:center; justify-content: space-between; gap: 10px;
-    margin-bottom: 10px;
-  }
-  .modalHead b { font-size: 14px; }
-
-</style>
-
-<div class="wrap">
-  <h1>💘 Regalo de San Valentín</h1>
-  <p class="sub">Elige, tu regalo GRATIS.</p>
-
-  <div class="controls">
-    <div>
-      <label for="tipo">¿Piensa a quien le vas a regalar?</label>
-      <select id="tipo">
-        <option value="ABRAZOS">1. Un amig@</option>
-        <option value="BESOS" >2. Mas que amig@</option>
-        <option value="CARICIAS">3. Mucho mas</option>
-      </select>
+    <div class="controls">
+      <div>
+        <label for="tipo">¿Piensa a quien le vas a regalar?</label>
+        <select id="tipo">
+          <option value="ABRAZOS">1. Un amig@</option>
+          <option value="BESOS">2. Mas que amig@</option>
+          <option value="CARICIAS">3. Mucho mas</option>
+        </select>
+      </div>
+      <div>
+        <label for="cantidad">Elige un numero mayor que 1 menor que 9999</label>
+        <input id="cantidad" inputmode="numeric" type="number" min="2" max="9999" step="1" value="1000" />
+      </div>
     </div>
-    <div>
-      <label for="cantidad">Elige un numero mayor que 1 menor que 9999</label>
-      <input id="cantidad" inputmode="numeric" type="number" min="2" max="9999" step="1" value="1000" />
+
+    <div class="buttons">
+      <button id="btnInline" type="button">Generar</button>
+      <button id="btnDownload" type="button">Descargar imagen</button>
     </div>
+
+    <div id="inlineOut" style="display:none;">
+      <div class="bill" id="billInline" aria-label="Vale">
+        <div class="text topLeft" id="t1"></div>
+        <div class="text bottomRight" id="t2"></div>
+      </div>
+    </div>
+
+    <p class="hint">Tip: genera → toma screenshot → comparte en WhatsApp o súbelo a tu historia 😄</p>
   </div>
 
-  <div class="buttons">
-    <button id="btnInline" type="button">Generar</button>
-    <!--<button id="btnModal" type="button">Ver en popup</button>-->
-  </div>
+  <!-- Librería para descargar el billete como imagen -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <div id="inlineOut" style="display:none;">
-    <div class="bill"  id="billInline" aria-label="Vale">
-      <div class="text topLeft" id="t1"></div>
-      <div class="text bottomRight" id="t2"></div>
-    </div>
-  </div>
+  <script>
+    const tipo = document.getElementById("tipo");
+    const cantidad = document.getElementById("cantidad");
 
-  <p class="hint">Tip: genera → toma screenshot → comparte en WhatsApp o súbelo a tu historia 😄</p>
-</div>
+    const inlineOut = document.getElementById("inlineOut");
+    const t1 = document.getElementById("t1");
+    const t2 = document.getElementById("t2");
+    const billInline = document.getElementById("billInline");
 
-  
-<script>
-  const tipo = document.getElementById("tipo");
-  const cantidad = document.getElementById("cantidad");
+    const fondos = {
+      ABRAZOS: "./billete_abrazos.jpg",
+      BESOS: "./billete_besos.jpg",
+      CARICIAS: "./billete.jpg"
+    };
 
-  const inlineOut = document.getElementById("inlineOut");
-  const t1 = document.getElementById("t1");
-  const t2 = document.getElementById("t2");
- 
-  const billInline = document.getElementById("billInline");
+    function formatEspacio(n) {
+      return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
 
-  // ✅ Mapa: tipo → imagen (archivo local)
-  const fondos = {
-    ABRAZOS: "./billete_abrazos.jpg",
-    BESOS: "./billete_besos.jpg",
-    CARICIAS: "./billete.jpg",
-  };
+    function getTexto() {
+      const c = Math.max(1, parseInt(cantidad.value || "1", 10));
+      return `${formatEspacio(c)} ${tipo.value}`;
+    }
 
-  function applyBackground() {
-    const url = fondos[tipo.value] || fondos.ABRAZOS;
-    billInline.style.backgroundImage = `url("${url}")`;
-  }
+    function applyBackground() {
+      const url = fondos[tipo.value] || fondos.ABRAZOS;
+      billInline.style.backgroundImage = `url("${url}")`;
+    }
 
-  function formatEspacio(n) {
-    // separador por espacio (como billete)
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  }
+    function renderInline() {
+      applyBackground();
+      const txt = getTexto();
+      t1.textContent = txt;
+      t2.textContent = txt;
+    }
 
-  function getTexto() {
-    const c = Math.max(1, parseInt(cantidad.value || "1", 10));
-    return `${formatEspacio(c)} ${tipo.value}`;
-  }
-
-  function renderInline() {
-    applyBackground(); 
-    const txt = getTexto();
-    t1.textContent = txt;
-    t2.textContent = txt;
-  }
-
-  function renderModal() {
-    applyBackground(); 
-    const txt = getTexto();
-    mt1.textContent = txt;
-    mt2.textContent = txt;
-  }
-
-  document.getElementById("btnInline").addEventListener("click", () => {
-    inlineOut.style.display = "block";
-    renderInline();
-    inlineOut.scrollIntoView({behavior:"smooth", block:"center"});
-  });
-
-  
-  // Enter = generar
-  cantidad.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
+    function showInline() {
       inlineOut.style.display = "block";
       renderInline();
-      inlineOut.scrollIntoView({behavior:"smooth", block:"center"});
+      inlineOut.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-  });
 
-  applyBackground();
-</script>
+    document.getElementById("btnInline").addEventListener("click", showInline);
+
+    // Enter = generar
+    cantidad.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") showInline();
+    });
+
+    // Si cambias el tipo, actualiza el billete si ya está visible
+    tipo.addEventListener("change", () => {
+      if (inlineOut.style.display !== "none") renderInline();
+      else applyBackground();
+    });
+
+    // Descargar = (genera si hace falta) + descarga
+    document.getElementById("btnDownload").addEventListener("click", async () => {
+      inlineOut.style.display = "block";
+      renderInline();
+      await new Promise(requestAnimationFrame);
+
+      if (typeof html2canvas !== "function") {
+        alert("No se cargó html2canvas. Revisa tu conexión e intenta de nuevo.");
+        return;
+      }
+
+      try {
+        const canvas = await html2canvas(billInline, {
+          scale: 3,
+          useCORS: true,
+          backgroundColor: null
+        });
+
+        canvas.toBlob((blob) => {
+          if (!blob) return;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "vale-san-valentin.png";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        }, "image/png");
+      } catch (err) {
+        console.error(err);
+        alert("No se pudo descargar. Si estás abriendo como archivo, prueba en GitHub Pages o en http://localhost.");
+      }
+    });
+
+    applyBackground();
+  </script>
+</body>
+</html>
