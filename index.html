@@ -1,0 +1,186 @@
+<style>
+  :root { --pad: 14px; }
+  body { margin: 0; }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px var(--pad) 28px;
+    display: grid;
+    gap: 14px;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  h1 { font-size: 20px; margin: 6px 0 0; }
+  .sub { color:#556; font-size: 13px; margin: 0 0 6px; }
+
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: end;
+  }
+  label { font-size: 13px; color:#334; display:block; margin-bottom: 6px; }
+  select, input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #d6dbe2;
+    background: #fff;
+  }
+  .buttons { display:flex; gap:10px; }
+  button {
+    padding: 10px 12px;
+    font-size: 15px;
+    border-radius: 12px;
+    border: 1px solid #d6dbe2;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  /* Billete */
+  .bill {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 860 / 360; 
+    background: center/cover no-repeat;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(0,0,0,.18);
+  }
+  .text {
+    position: absolute;
+    color: rgba(0,0,0,.9);
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.35);
+    white-space: nowrap;
+    font-size: clamp(16px, 3.8vw, 30px);
+  }
+  .topLeft { top: 2%; left: 8%; }
+  .bottomRight { bottom: 4%; right: 8%; } /* pegado a la orilla */
+  .hint { font-size: 12px; color:#667; }
+
+  /* Modal */
+  .backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.48);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 9999;
+  }
+  .modal {
+    width: min(760px, 100%);
+    background: #fff;
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 26px 70px rgba(0,0,0,.28);
+  }
+  .modalHead {
+    display:flex; align-items:center; justify-content: space-between; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .modalHead b { font-size: 14px; }
+
+</style>
+
+<div class="wrap">
+  <h1>💘 Regalo de San Valentín</h1>
+  <p class="sub">Elige, tu regalo GRATIS.</p>
+
+  <div class="controls">
+    <div>
+      <label for="tipo">¿Piensa a quien le vas a regalar?</label>
+      <select id="tipo">
+        <option value="ABRAZOS">1. Un amig@</option>
+        <option value="BESOS" >2. Mas que amig@</option>
+        <option value="CARICIAS">3. Mucho mas</option>
+      </select>
+    </div>
+    <div>
+      <label for="cantidad">Elige un numero mayor que 1 menor que 9999</label>
+      <input id="cantidad" inputmode="numeric" type="number" min="2" max="9999" step="1" value="1000" />
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="btnInline" type="button">Generar</button>
+    <!--<button id="btnModal" type="button">Ver en popup</button>-->
+  </div>
+
+  <div id="inlineOut" style="display:none;">
+    <div class="bill"  id="billInline" aria-label="Vale">
+      <div class="text topLeft" id="t1"></div>
+      <div class="text bottomRight" id="t2"></div>
+    </div>
+  </div>
+
+  <p class="hint">Tip: genera → toma screenshot → comparte en WhatsApp o súbelo a tu historia 😄</p>
+</div>
+
+  
+<script>
+  const tipo = document.getElementById("tipo");
+  const cantidad = document.getElementById("cantidad");
+
+  const inlineOut = document.getElementById("inlineOut");
+  const t1 = document.getElementById("t1");
+  const t2 = document.getElementById("t2");
+ 
+  const billInline = document.getElementById("billInline");
+
+  // ✅ Mapa: tipo → imagen (archivo local)
+  const fondos = {
+    ABRAZOS: "./billete_abrazos.jpg",
+    BESOS: "./billete_besos.jpg",
+    CARICIAS: "./billete.jpg",
+  };
+
+  function applyBackground() {
+    const url = fondos[tipo.value] || fondos.ABRAZOS;
+    billInline.style.backgroundImage = `url("${url}")`;
+  }
+
+  function formatEspacio(n) {
+    // separador por espacio (como billete)
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  function getTexto() {
+    const c = Math.max(1, parseInt(cantidad.value || "1", 10));
+    return `${formatEspacio(c)} ${tipo.value}`;
+  }
+
+  function renderInline() {
+    applyBackground(); 
+    const txt = getTexto();
+    t1.textContent = txt;
+    t2.textContent = txt;
+  }
+
+  function renderModal() {
+    applyBackground(); 
+    const txt = getTexto();
+    mt1.textContent = txt;
+    mt2.textContent = txt;
+  }
+
+  document.getElementById("btnInline").addEventListener("click", () => {
+    inlineOut.style.display = "block";
+    renderInline();
+    inlineOut.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+
+  
+  // Enter = generar
+  cantidad.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      inlineOut.style.display = "block";
+      renderInline();
+      inlineOut.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+  });
+
+  applyBackground();
+</script>
